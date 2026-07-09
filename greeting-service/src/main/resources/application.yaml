@@ -1,9 +1,11 @@
 spring:
   application:
     name: greeting-service
-
   config:
     import: optional:configserver:http://localhost:8888
+  cloud:
+    config:
+      profile: en
 
 server:
   port: 8080
@@ -21,6 +23,6 @@ management:
     health:
       show-details: ALWAYS
 
-greeting-service:
-  greeting: "Olá"
-  defaultValue: "Mundo"
+#greeting-service:
+#  greeting: "Olá"
+#  defaultValue: "Mundo"

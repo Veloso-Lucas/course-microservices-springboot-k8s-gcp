@@ -1,10 +1,22 @@
 spring:
   application:
     name: spring-cloud-config-server
-  # Config to define witch configuration will be used for config-server
-  profiles:
-    active:
-      - native
+
+  # Config to use a configuration from a git repository
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/Veloso-Lucas/course-microservices-springboot-k8s-gcp-config
+          default-label: main
+          search-paths: 'greeting-service*'
+          #username: git-username
+          #password: git-password
+
+  # Config to define witch configuration will be used for config-server local
+    #  profiles:
+      #active:
+    #- native
 
 server:
   port: 8888

@@ -22,8 +22,8 @@ public class GreetingController {
     @RequestMapping("/greeting")
     public Greeting greeting(@RequestParam(value = "name", defaultValue = "") String name) {
 
-        if (name.isEmpty()) name = greetingConfiguration.defaultValue();
+        if (name.isEmpty()) name = greetingConfiguration.getDefaultValue();
 
-        return  new Greeting(counter.incrementAndGet(), String.format(template, greetingConfiguration.greeting() ,name));
+        return  new Greeting(counter.incrementAndGet(), String.format(template, greetingConfiguration.getGreeting() ,name));
     }
 }
