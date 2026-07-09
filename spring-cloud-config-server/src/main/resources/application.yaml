@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: spring-cloud-config-server
+  # Config to define witch configuration will be used for config-server
+  profiles:
+    active:
+      - native
+
+server:
+  port: 8888
