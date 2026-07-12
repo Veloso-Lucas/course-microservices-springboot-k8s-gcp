@@ -5,6 +5,10 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
+  instance:
+    # Register using the machine IP instead of the OS hostname (e.g. DESKTOP-xxx.mshome.net),
+    # so Eureka clients (API Gateway, Feign) can resolve and reach this instance locally.
+    prefer-ip-address: true
 
 spring:
   application:
