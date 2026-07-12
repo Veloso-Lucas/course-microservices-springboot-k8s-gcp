@@ -1,5 +1,6 @@
 server:
   port: 8100
+
 eureka:
   client:
     service-url:
@@ -8,6 +9,53 @@ eureka:
     # Register using the machine IP instead of the OS hostname (e.g. DESKTOP-xxx.mshome.net),
     # so Eureka clients (API Gateway, Feign) can resolve and reach this instance locally.
     prefer-ip-address: true
+
+# Resilience4j settings for FooBarController demos (/book-service/resilience/*).
+# Each pattern uses its own named instance so configs stay easy to read and tune independently.
+resilience4j:
+  retry:
+    instances:
+      foo-bar-retry:
+        # Total number of attempts (first try + retries).
+        max-attempts: 5
+        # Wait time between retry attempts.
+        wait-duration: 1s
+        # Double the wait time after each failed attempt (1s, 2s, 4s, ...).
+        enable-exponential-backoff: true
+        exponential-backoff-multiplier: 2
+
+  circuitbreaker:
+    instances:
+      foo-bar-circuit-breaker:
+        # Number of recent calls used to compute the failure rate.
+        sliding-window-size: 5
+        # Minimum calls before the breaker can open based on failures.
+        minimum-number-of-calls: 3
+        # Open the circuit when this percentage of calls in the window fail.
+        failure-rate-threshold: 50
+        # How long the circuit stays open before allowing trial calls again.
+        wait-duration-in-open-state: 10s
+        # Probe calls allowed in half-open state to decide if the circuit should close.
+        permitted-number-of-calls-in-half-open-state: 2
+
+  ratelimiter:
+    instances:
+      foo-bar-rate-limit:
+        # Maximum number of permitted calls per refresh period.
+        limit-for-period: 2
+        # Time window that resets the permit counter.
+        limit-refresh-period: 10s
+        # Do not queue callers; reject immediately when the limit is exceeded.
+        timeout-duration: 0s
+
+  bulkhead:
+    instances:
+      foo-bar-bulkhead:
+        # Maximum number of concurrent executions for this endpoint.
+        max-concurrent-calls: 2
+        # Do not queue callers; reject immediately when the bulkhead is full.
+        max-wait-duration: 0s
+
 spring:
   application:
     name: book-service
