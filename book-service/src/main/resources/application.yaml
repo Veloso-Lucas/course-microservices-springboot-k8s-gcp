@@ -71,3 +71,14 @@ spring:
       hibernate:
     show-sql: false
     open-in-view: false
+
+springdoc:
+  api-docs:
+    path: /book-service/v3/api-docs
+  swagger-ui:
+    url: /book-service/v3/api-docs
+  # Relative server URL so "Try it out" uses the host where Swagger UI is open (API Gateway).
+  open-api:
+    servers:
+      - url: /
+        description: API Gateway
